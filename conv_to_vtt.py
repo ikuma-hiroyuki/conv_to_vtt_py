@@ -1,5 +1,5 @@
-import pathlib
 import os
+import pathlib
 
 
 def create_vtt_file(file_path: str):
@@ -15,17 +15,13 @@ def create_vtt_file(file_path: str):
 
         new_string = 'WEBVTT\n\n'
         with open(file_path, 'r', encoding="utf_8_sig") as f:
-            lines = f.readlines()
-            for line in lines:
-                if ('-->' in line):
-                    new_string += line.replace(',', '.')
-                else:
-                    new_string += line
+            for line in f.readlines():
+                new_string += line.replace(',', '.') if ('-->' in line) else line
         return new_string
 
     if os.path.exists(file_path):
-        extension = pathlib.PurePath(file_path).suffix
-        vtt_file_path = file_path.replace(extension, '.vtt')
+        current_extension = pathlib.PurePath(file_path).suffix
+        vtt_file_path = file_path.replace(current_extension, '.vtt')
 
         with open(vtt_file_path, 'w', encoding="utf_8_sig") as f:
             f.write(replace_file())
