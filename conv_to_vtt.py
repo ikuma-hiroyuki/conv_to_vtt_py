@@ -25,7 +25,7 @@ def create_vtt_file(file_path: str):
 
         with open(vtt_file_path, 'w', encoding="utf_8_sig") as f:
             f.write(replace_file())
-            print('The vtt file was created successfully.')
+            print('The vtt file was created successfully.\n')
     else:
         print('File does not exist.')
 
