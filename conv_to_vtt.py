@@ -1,5 +1,8 @@
 import os
 import pathlib
+from termcolor import cprint
+import colorama
+colorama.init()
 
 
 def create_vtt_file(file_path: str):
@@ -16,7 +19,8 @@ def create_vtt_file(file_path: str):
         new_string = 'WEBVTT\n\n'
         with open(file_path, 'r', encoding="utf_8_sig") as f:
             for line in f.readlines():
-                new_string += line.replace(',', '.') if ('-->' in line) else line
+                new_string += line.replace(',',
+                                           '.') if ('-->' in line) else line
         return new_string
 
     if os.path.exists(file_path):
@@ -25,9 +29,9 @@ def create_vtt_file(file_path: str):
 
         with open(vtt_file_path, 'w', encoding="utf_8_sig") as f:
             f.write(replace_file())
-            print('The vtt file was created successfully.\n')
+            cprint('[✔] The vtt file was created successfully.\n', 'green')
     else:
-        print('File does not exist.')
+        cprint('[x] File does not exist.\n', 'red')
 
 
 msg = ('Please enter the path of the target file.\n'
@@ -36,7 +40,7 @@ msg = ('Please enter the path of the target file.\n'
 
 path = input(msg)
 while True:
-    if path.lower() != 'exit':
+    if path.lower().strip('"') != 'exit':
         create_vtt_file(path)
         path = input(msg)
     else:
